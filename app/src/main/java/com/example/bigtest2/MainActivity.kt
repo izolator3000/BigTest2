@@ -1,22 +1,16 @@
 package com.example.bigtest2
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //Toast.makeText(this, "10 cek", Toast.LENGTH_LONG).show()
 
         val personeList: RecyclerView = findViewById(R.id.persone_list)
         val persons = arrayListOf<Persone>()

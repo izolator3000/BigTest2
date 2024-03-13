@@ -25,7 +25,7 @@ class Persone(){
         Executors.newSingleThreadExecutor().execute({
             json =  URL(url).readText()
         })
-        Thread.sleep(1_000)
+        Thread.sleep(1000)
         return json
     }
 
@@ -51,8 +51,8 @@ class Persone(){
         val phone = new_data.split("\",\"cell")[0]
 
         // Фотография
-        new_data = new_data.split("thumbnail\":\"")[1]
-        val photo = new_data.split("\"},\"nat")[0]
+        new_data = new_data.split("large\":\"")[1]
+        val photo = new_data.split("\",\"medium")[0]
 
         return arrayOf(prsoneName, personeAddress, photo, phone, data)
     }

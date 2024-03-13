@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class PersoneAdapter(var persones: List<Persone>, var context: Context):RecyclerView.Adapter<PersoneAdapter.MyViewHolder>() {
 
@@ -30,6 +32,10 @@ class PersoneAdapter(var persones: List<Persone>, var context: Context):Recycler
         holder.fullName.text = persones[position].fullName
         holder.address.text = persones[position].address
         holder.phone.text = persones[position].phone
+
+        holder.photo.setImageURI(persones[position].photo.toUri())
+
+        Glide.with(holder.photo).load(persones[position].photo).placeholder(R.drawable.ic_launcher_foreground).into(holder.photo)
     }
 
 
