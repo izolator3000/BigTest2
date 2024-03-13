@@ -1,9 +1,11 @@
 package com.example.bigtest2
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
@@ -17,6 +19,7 @@ class PersoneAdapter(var persones: List<Persone>, var context: Context):Recycler
         val fullName: TextView = view.findViewById(R.id.item_fullName)
         val address: TextView = view.findViewById(R.id.item_address)
         val phone: TextView = view.findViewById(R.id.item_phone)
+        val btn_full_info: Button = view.findViewById(R.id.btn_fullInfo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -34,8 +37,13 @@ class PersoneAdapter(var persones: List<Persone>, var context: Context):Recycler
         holder.phone.text = persones[position].phone
 
         holder.photo.setImageURI(persones[position].photo.toUri())
-
         Glide.with(holder.photo).load(persones[position].photo).placeholder(R.drawable.ic_launcher_foreground).into(holder.photo)
+
+        holder.btn_full_info.setOnClickListener{
+            val intent = Intent(context, full_persone_info::class.java)
+            intent.putExtra("info", persones[position].info)
+            context.startActivity(intent)
+        }
     }
 
 
