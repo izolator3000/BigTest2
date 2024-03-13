@@ -9,10 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import java.net.URL
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+//import java.io.FileInputStream
+//import java.io.FileOutputStream
 import java.util.concurrent.Executors
 
 
@@ -41,15 +42,12 @@ class Persone(title: String, first: String, last: String, number: String, street
 class MainActivity : AppCompatActivity() {
 
     fun get_data(url: String = "https://randomuser.me/api/"): String {
-        var j: String = "1"
+        var json: String = "1"
         Executors.newSingleThreadExecutor().execute({
-            val json = URL(url).readText()
-            j = json
-            findViewById<TextView>(R.id.bottomText).text = json
-
+            json =  URL(url).readText()
         })
         Thread.sleep(1_000)
-        return j
+        return json
     }
 
     //fun save_persone(path: String = "persone.txt") = File(path).printWriter().use {
@@ -59,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         it.readText() }
 
 
-    fun pull_data(data: String = get_data()): Persone {
+    fun pull_data(data: String): Persone {
         Toast.makeText(this, "Уже ЮРЛ", Toast.LENGTH_LONG).show()
         // ФИО
         var new_data = data.split("title\":\"")[1]
@@ -105,12 +103,13 @@ class MainActivity : AppCompatActivity() {
 
         getDataBtn.setOnClickListener(){
 
-            val persone = pull_data()
+            val persone = pull_data(get_data())
             //persone.save_fullData()
 
             fullName.text = persone.fullName
             address.text = persone.address
             photo.setImageURI(persone.photo.toUri())
+            Glide.with(applicationContext).load(persone.photo).placeholder(R.drawable.ic_launcher_foreground).into(photo)
             phone.text = persone.phone
         }
 
