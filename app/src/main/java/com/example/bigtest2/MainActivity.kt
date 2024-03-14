@@ -1,6 +1,7 @@
 package com.example.bigtest2
 
-import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.widget.Button
@@ -13,6 +14,8 @@ import java.io.File
 import java.io.FileWriter
 
 class MainActivity : AppCompatActivity() {
+
+
 
     val persons = arrayListOf<Persone>()
 
@@ -30,6 +33,9 @@ class MainActivity : AppCompatActivity() {
 
         personeList.layoutManager = LinearLayoutManager(this)
         personeList.adapter = PersoneAdapter(persons, this)
+
+
+
 
         updateBtn.setOnClickListener{
             Toast.makeText(this, "Обновляем данные", Toast.LENGTH_SHORT).show()
@@ -49,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         deleteData()
         uploadData()
     }
+
     fun deleteData(){
         for(i in 0..persons.size){
             if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED){
@@ -56,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     File(path, "MyFile$i").delete()
                 } catch (e: Exception) {
-                    Toast.makeText(this, "Не далили файл", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Не удалили файл", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -104,5 +111,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
 }
