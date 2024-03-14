@@ -10,6 +10,16 @@ class Persone(){
     var phone = ""
     var info = ""
 
+    constructor(info: String) : this() {
+        val personeInfo = pull_data(info)
+
+        fullName = personeInfo[0]
+        address = personeInfo[1]
+        photo = personeInfo[2]
+        phone = personeInfo[3]
+        this.info = personeInfo[4]
+    }
+
     fun fillData(){
         val personeInfo = pull_data(get_data())
 

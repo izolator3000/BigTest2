@@ -3,4 +3,5 @@
     <string name="exampleName">Иван Иванов Петрович</string>
     <string name="title_perone_date">Персональные данные</string>
     <string name="avatar">Avatar</string>
+    <string name="fullname">FullName</string>
 </resources>
