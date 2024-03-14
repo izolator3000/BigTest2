@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -38,6 +37,15 @@ class PersoneAdapter(var persones: List<Persone>, var context: Context):Recycler
         holder.fullName.text = persones[position].fullName
         holder.address.text = persones[position].address
         holder.phone.text = persones[position].phone
+
+        holder.address.setOnClickListener{
+
+            //val geoUri = "http://maps.google.com/maps?q=loc:$lat,$lng ($mTitle)"
+            val map = "http://maps.google.co.in/maps?q=${persones[position].address}"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(map))
+            context.startActivity(intent)
+            //holder.address.getContext().startActivity(intent)
+        }
 
         holder.phone.setOnClickListener{
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${persones[position].phone}"))
