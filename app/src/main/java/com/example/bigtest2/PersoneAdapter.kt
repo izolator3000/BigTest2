@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -38,13 +39,27 @@ class PersoneAdapter(var persones: List<Persone>, var context: Context):Recycler
         holder.address.text = persones[position].address
         holder.phone.text = persones[position].phone
 
-        holder.address.setOnClickListener{
+        holder.fullName.setOnClickListener {
+            val email_ = persones[position].info.split("email\":\"")[1]
+            val email = email_.split("\",\"login")[0]
 
-            //val geoUri = "http://maps.google.com/maps?q=loc:$lat,$lng ($mTitle)"
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                data = Uri.parse("mailto:")
+                type = "text/plain"
+                //putExtra(Intent.EXTRA_EMAIL, "someone") - не работает
+                putExtra(Intent.EXTRA_SUBJECT, "Сделано в России")
+                putExtra(Intent.EXTRA_TEXT, email)
+            }
+            intent.setPackage("com.google.android.gm")
+            context.startActivity(intent)
+
+        }
+
+        holder.address.setOnClickListener{
             val map = "http://maps.google.co.in/maps?q=${persones[position].address}"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(map))
             context.startActivity(intent)
-            //holder.address.getContext().startActivity(intent)
         }
 
         holder.phone.setOnClickListener{
