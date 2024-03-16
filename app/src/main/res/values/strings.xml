@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">BigTest2</string>
-    <string name="exampleName">Иван Иванов Петрович</string>
     <string name="title_perone_date">Персональные данные</string>
     <string name="avatar">Avatar</string>
-    <string name="fullname">FullName</string>
+    <string name="update">Обновить</string>
+    <string name="fullname">ФИО</string>
+    <string name="full_user_info">Полная информация</string>
+    <string name="in_list_phone">Phone</string>
+    <string name="in_list_address">Address</string>
 </resources>

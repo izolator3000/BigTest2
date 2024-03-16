@@ -1,7 +1,5 @@
 package com.example.bigtest2
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.widget.Button
@@ -20,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     val persons = arrayListOf<Persone>()
 
 
-// Включить разрешение на File and Mdia permission
+    //__________________________________________ Включить разрешение на File and Mdia permission
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,9 +32,6 @@ class MainActivity : AppCompatActivity() {
         personeList.layoutManager = LinearLayoutManager(this)
         personeList.adapter = PersoneAdapter(persons, this)
 
-
-
-
         updateBtn.setOnClickListener{
             Toast.makeText(this, "Обновляем данные", Toast.LENGTH_SHORT).show()
             update_data()
@@ -47,8 +42,6 @@ class MainActivity : AppCompatActivity() {
             Проскролить и данные обновлены
              */
         }
-        //val full_info = Intent(this, full_persone_info::class.java)
-        //startActivity(full_info) Для перехода на другой активити
     }
 
     fun update_data(){
@@ -69,13 +62,15 @@ class MainActivity : AppCompatActivity() {
         }
         persons.clear()
     }
-    fun saveData(persons: List<Persone>){
 
+    fun saveData(persons: List<Persone>){
+        // Внутренняя память с onSaveInstanceState и onRestoreInstanceState не работала
+        // SharedPreferences тоже не работала
         for(i in 0..persons.size){
             if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED){
                 val path = Environment.getExternalStorageDirectory()
 
-                var file = File(path, "MyFile$i")
+                val file = File(path, "MyFile$i")
                 val buff = BufferedWriter(FileWriter(file))
 
                 buff.write(persons[i].info)
@@ -83,9 +78,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     fun uploadData(){
         try {
             for (i in 0..10) {
+                // Пробуем загрузить данные с телефона
                 if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
                     val path = Environment.getExternalStorageDirectory()
 
@@ -96,6 +93,7 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception){
             try {
                 for (i in 0..10) {
+                    // Если с телефона не получилось, загружаем данные из сети
                     val persone = Persone()
                     persone.fillData()
                     persons.add(persone)
@@ -103,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Toast.makeText(this, "Ошибка соединения", Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(this, "Создали данные", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Получили данные", Toast.LENGTH_SHORT).show()
             try {
                 saveData(persons)
             } catch (e:Exception) {

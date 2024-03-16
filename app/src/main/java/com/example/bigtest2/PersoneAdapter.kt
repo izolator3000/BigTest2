@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -54,6 +53,7 @@ class PersoneAdapter(var persones: List<Persone>, var context: Context):Recycler
             intent.setPackage("com.google.android.gm")
             context.startActivity(intent)
 
+            // В текст письма вставляется почта, которую надо скопировать в адрес получателя
         }
 
         holder.address.setOnClickListener{
@@ -76,6 +76,4 @@ class PersoneAdapter(var persones: List<Persone>, var context: Context):Recycler
             context.startActivity(intent)
         }
     }
-
-
 }

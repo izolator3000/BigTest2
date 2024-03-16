@@ -21,6 +21,7 @@ class Persone(){
     }
 
     fun fillData(){
+        // два метода похожи. Не переделывал, потому что класс закончен и не планируется расширяться
         val personeInfo = pull_data(get_data())
 
         fullName = personeInfo[0]
@@ -31,15 +32,23 @@ class Persone(){
     }
 
     fun get_data(url: String = "https://randomuser.me/api/"): String {
-        var json: String = "1"
+        /*
+        Главный костыль: создание дополнительного потока, чтобы получить json без падения программы
+        */
+        var json = "1"
         Executors.newSingleThreadExecutor().execute({
             json =  URL(url).readText()
         })
-        Thread.sleep(1000)
+        Thread.sleep(1000) // Пол секунды недостаточно, бывает, приложение падает
         return json
     }
 
     fun pull_data(data: String): Array<String> {
+        // JSONObject не удалось подключить. XML библиотеки есть, а json нет
+        // Re варажения тоже не сработали
+        // Главное - резульатат
+
+
         // ФИО
         var new_data = data.split("title\":\"")[1]
         var prsoneName = new_data.split("\",\"first\":\"")[0] + " "
@@ -67,20 +76,5 @@ class Persone(){
         return arrayOf(prsoneName, personeAddress, photo, phone, data)
     }
 
-
-    /*fun save_fullData(path: String = "persone.txt"){
-        //File(path).printWriter().use { it.write(get_data().readText())}
-        try {
-
-            val file = File(Environment.getExternalStorageDirectory(), "persone.txt")
-            file.writeText(fullData)
-            file.canExecute()
-        }catch (e: Exception){}
-    }*/
-
-    // fun read_persone(path: String = "persone.txt") = File(path).bufferedReader().use {
-    //    it.readText() }
-
-
-    fun printData() = println("ФИО: $fullName\nАдрес: $address\nФото: $photo\nТелефон: $phone\n\n")
+    //fun printData() = println("ФИО: $fullName\nАдрес: $address\nФото: $photo\nТелефон: $phone\n\n")
 }
